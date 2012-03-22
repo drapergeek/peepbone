@@ -34,4 +34,8 @@ describe("Album", function () {
         expect(this.album.get('tracks').length).toEqual(2);
     });
 
+    describe("first track", function(){
+      expect(this.album.isFirstTrack(0)).toBeTruthy();
+    }
+
 });

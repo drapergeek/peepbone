@@ -22,9 +22,9 @@
   window.Albums = Backbone.Collection.extend({
     model: Album,
     url: '/albums'
-
-
   });
+
+  window.library = new Albums();
 
   window.AlbumView = Backbone.View.extend({
     tagName: 'li',
@@ -45,7 +45,7 @@
   });
 
   window.LibraryAlbumView = AlbumView.extend({
-    
+
   });
 
   window.LibraryView = Backbone.View.extend({
@@ -76,5 +76,36 @@
 
 
   });
+
+  window.BackboneTunes = Backbone.Router.extend({
+    routes: {
+      '': 'home',
+      'blank': 'blank'
+    },
+
+    initialize: function(){
+      this.libraryView = new LibraryView({
+        collection: window.library
+      });
+    },
+
+    home: function(){
+      var $container = $('#container');
+      $container.empty();
+      $container.append(this.libraryView.render().el);
+    },
+
+    blank: function(){
+      $('#container').empty();
+      $('#container').text('blank');
+    }
+
+
+  });
+
+    $(function(){
+      window.App = new BackboneTunes();
+      Backbone.history.start();
+    });
 
 })(jQuery);
